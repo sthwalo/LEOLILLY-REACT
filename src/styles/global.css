@@ -1,0 +1,362 @@
+/* General Styling */
+body {
+    font-family: 'Raleway', sans-serif;
+    background-color: #F2F2F2; /* Light grey background */
+    margin: 0;
+    padding: 0;
+    color: #0D0D0D; /* Black text */
+}
+
+.clear {
+    clear: both;
+}
+
+a {
+    color: #FFFFFF; /* White for links */
+    text-decoration: none;
+}
+
+/* General link styling */
+nav ul li a {
+    color: #FFFFFF; /* White text for navigation links */
+    text-decoration: none;
+    font-weight: normal; /* Ensure normal weight */
+}
+
+/* Ensure links keep the same color when clicked or visited */
+nav ul li a:visited, 
+nav ul li a:active {
+    color: #FFFFFF; /* Keep the color consistent after clicking */
+}
+
+/* Hover state */
+nav ul li:hover a {
+    color: #999; /* Change to light grey on hover */
+}
+
+/* Active state for the current page (only for the clicked link) */
+nav ul li a.active {
+    color: #5D8C6D; /* Green to highlight active page */
+    font-weight: bold; /* Only bold the active link, not the entire menu */
+}
+
+/* Optional: Highlight link on hover (when it's also active) */
+nav ul li a.active:hover {
+    color: #5D8C6D;
+}
+
+/* Button Styling */
+button,
+.cta-button,
+.whatsapp-button {
+    padding: 10px 20px;
+    background-color: #753F8C; /* Purple background */
+    color: #FFFFFF; /* White text */
+    border: 2px solid #5D8C6D; /* Green border */
+    border-radius: 2px 50px 2px 50px;
+    font-weight: bold;
+    font-size: 20px;
+    transition: background-color 0.5s ease;
+    display: inline-flex;
+    text-decoration: none;
+}
+
+button:hover,
+.cta-button:hover,
+.whatsapp-button:hover {
+    background-color: #5D8C6D; /* Green on hover */
+    cursor: pointer;
+}
+
+/* Header Section */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #40363B; /* Dark grey background */
+    padding: 10px 20px;
+    color: #FFFFFF; /* White text */
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-image {
+    max-width: 200px;
+    height: auto;
+    margin-right: 10px;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #753F8C; /* Purple background */
+    color: white;
+}
+
+/* Section Styling */
+.section {
+    text-align: center;
+    color: #0D0D0D;
+    padding-bottom: 5%;
+}
+
+.section h3 {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 28px;
+    padding: 5% 0 3%;
+    color: #40363B;
+}
+
+/* Courses Section */
+.courses {
+    padding: 40px 0;
+    text-align: center;
+}
+
+.course-item {
+    display: inline-block;
+    width: 45%;
+    padding: 30px 20px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px #444;
+    transition: background-color 0.5s ease, border-radius 0.5s ease;
+    margin: 15px;
+    text-align: center;
+}
+
+.course-item:hover {
+    border-radius: 20px;
+    background-color: #753F8C;
+    color: #FFFFFF;
+}
+
+.course-item h2 {
+    font-size: 26px;
+    color: #5D8C6D;
+    padding-top: 5%;
+}
+
+.course-item p {
+    color: #40363B;
+    padding-bottom: 40px;
+}
+
+.course-item:hover h2,
+.course-item:hover p {
+    color: #FFFFFF;
+}
+
+/* Top Students Section */
+.top-students {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.top-students h1 {
+    padding-bottom: 55px;
+    color: #40363B;
+    letter-spacing: 1.8;
+    line-height: 1.7;
+}
+
+.student {
+    display: inline-block;
+    width: 30.333%;
+    padding: 10px;
+    transition: background-color 0.7s ease;
+}
+
+.student img {
+    border-radius: 5px 20px;
+    width: 100%;
+    height: 350px;
+}
+
+.student:hover {
+    background-color: #753F8C;
+    color: #FFFFFF;
+}
+
+/* About Section */
+.about {
+    background-color: #40363B;
+    padding: 40px 0;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.about h1 {
+    font-size: 36px;
+    color: #5D8C6D;
+}
+
+.about p {
+    font-size: 18px;
+    line-height: 1.5;
+    padding: 0 20px 20px;
+}
+
+/* Footer Section */
+.footer {
+    background-color: #40363B;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.footer a {
+    color: #5D8C6D;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.whatsapp-button-footer {
+    margin: 15px auto;
+    display: block;
+    width: fit-content;
+}
+
+/* Enrollment Form Section */
+.enroll {
+    background-color: #F2F2F2;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.enroll h2 {
+    color: #40363B;
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.enroll form {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.enroll label {
+    display: block;
+    margin-top: 15px;
+    color: #40363B;
+    font-weight: bold;
+}
+
+.enroll input,
+.enroll select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #5D8C6D;
+    border-radius: 4px;
+}
+
+.enroll button {
+    margin-top: 20px;
+    width: auto;
+}
+
+/* Gallery Section */
+.gallery {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.gallery h1 {
+    color: #40363B;
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+.graduation-year {
+    margin-bottom: 40px;
+}
+
+.graduation-year h2 {
+    color: #5D8C6D;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.gallery-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.gallery-item {
+    width: 300px;
+    padding: 15px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 3px;
+}
+
+.gallery-item h3 {
+    color: #40363B;
+    margin: 10px 0;
+}
+
+.gallery-item p {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    nav ul {
+        margin-top: 15px;
+    }
+    
+    .course-item {
+        width: 90%;
+    }
+    
+    .student {
+        width: 90%;
+        margin-bottom: 20px;
+    }
+    
+    .gallery-item {
+        width: 90%;
+    }
+}

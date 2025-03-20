@@ -1,0 +1,25 @@
+{
+  "short_name": "LeoLilly",
+  "name": "LeoLilly Care International",
+  "icons": [
+    {
+      "src": "img/Final Logo .png",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "img/Final Logo .png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "img/Final Logo .png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#753F8C",
+  "background_color": "#F2F2F2"
+}
