@@ -5,17 +5,12 @@ export interface GalleryImage {
   category: string;
   year: string;
   images?: string[];
-<<<<<<< HEAD
   testimony?: string;
-=======
-    testimony?: string;
->>>>>>> 28059880e14a27d95c311704948915c14f67a2ac
 }
 
 const galleryData: GalleryImage[] = [
   {
     id: '2024-1',
-<<<<<<< HEAD
     title: 'Graduation',
     url: '/img/Team/may255.jpg',
     category: 'Graduation',
@@ -112,40 +107,6 @@ const galleryData: GalleryImage[] = [
 ];
 
 
-=======
-    title: 'Sophia Adams',
-    url: '/img/2024/graduate.jpg',
-    category: 'Graduates',
-    year: '2024',
-    testimony: 'Already putting my caregiving skills to great use!'
-  },
-  {
-    id: '2024-2',
-    title: 'John Smith',
-    url: '/img/2024/graduate.jpg',
-    category: 'Graduates',
-    year: '2024',
-    testimony: 'The training I received was excellent and prepared me well for my new career.'
-  },
-  {
-    id: '2024-3',
-    title: 'Maria Johnson',
-    url: '/img/2024/graduate.jpg',
-    category: 'Graduates',
-    year: '2024',
-    testimony: 'I learned so much during my time at LeoLilly Care International!'
-  },
-  {
-    id: '2024-4',
-    title: 'David Williams',
-    url: '/img/2024/graduate.jpg',
-    category: 'Graduates',
-    year: '2024',
-    testimony: 'The instructors were knowledgeable and supportive throughout the course.'
-  }
-];
-
->>>>>>> 28059880e14a27d95c311704948915c14f67a2ac
 export const getYears = (): string[] => {
   const years = Array.from(new Set(galleryData.map(image => image.year)));
   return years.sort((a, b) => parseInt(b) - parseInt(a));
