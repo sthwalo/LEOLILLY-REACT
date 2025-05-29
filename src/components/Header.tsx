@@ -7,7 +7,7 @@ const Header: React.FC = () => {
   return (
     <header className="header">
       <div className="logo-container">
-        <img src="/img/Final Logo .png" alt="LeoLilly Care International Logo" className="logo-image" />
+        <img src="/img/Logo.png" alt="LeoLilly Care International Logo" className="logo-image" />
       </div>
       <nav>
         <ul>

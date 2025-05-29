@@ -183,17 +183,32 @@ nav ul li {
     width: 30.333%;
     padding: 10px;
     transition: background-color 0.7s ease;
+    margin: 0 1.5%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
 }
 
 .student img {
-    border-radius: 5px 20px;
+    border-radius: 5px 5px 0 0;
     width: 100%;
-    height: 350px;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
 }
 
 .student:hover {
     background-color: #753F8C;
     color: #FFFFFF;
+}
+
+/* Specific styling for student images on home page */
+.home-student-image {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+    object-position: top;
 }
 
 /* About Section */

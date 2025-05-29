@@ -27,14 +27,14 @@ const HomePage: React.FC = () => {
         <div className="container">
           <h1>Success Stories</h1>
           <div className="student">
-            <img src="/img/Final Logo .png" alt="Student 1" />
-            <h3>John Doe</h3>
-            <p>"LeoLilly Care International helped me build a successful caregiving career!"</p>
+            <img src="/img/success/child.jpeg" alt="Student 1" className="student-image home-student-image" />
+            <h3>Tendai Mzanywa</h3>
+            <p>"LeoLilly Care International helped me Develop essential skills for caring for children of various ages, including safety protocols, developmental activities, and positive discipline techniques."</p>
           </div>
           <div className="student">
-            <img src="/img/Final Logo .png" alt="Student 2" />
-            <h3>Jane Smith</h3>
-            <p>"The training I received made me confident and prepared for my caregiving role."</p>
+            <img src="/img/success/PHOTO-2025-05-18-07-38-11.jpg" alt="Student 2" className="student-image home-student-image" />
+            <h3>Tendai Mzanywa</h3>
+            <p>"The training I received made me confident and prepared to start my pre-school."</p>
           </div>
         </div>
       </section>

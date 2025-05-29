@@ -1,126 +1,122 @@
-import React from 'react';
-import { Graduate } from '../types';
+import React, { useState } from 'react';
+import { GalleryImage, getYears, getCategories, filterImages } from '../data/galleryData';
 
-interface GraduateItemProps extends Graduate {}
+interface ImageModalProps {
+  image: GalleryImage;
+  onClose: () => void;
+}
 
-const GraduateItem: React.FC<GraduateItemProps> = ({ name, image, testimony }: GraduateItemProps) => {
+const ImageModal: React.FC<ImageModalProps> = ({ image, onClose }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const images = image.images || [image.url];
+
+  const handleNextImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+  };
+
+  const handlePrevImage = () => {
+    setCurrentImageIndex((prevIndex) => 
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+  };
+
   return (
-    <div className="gallery-item">
-      <img src={image} alt={`${name}'s graduation`} />
-      <h3>{name}</h3>
-      {testimony && <p>"{testimony}"</p>}
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <button onClick={onClose} className="close-button">
+          ×
+        </button>
+        <div className="modal-image-container">
+          <img 
+            src={images[currentImageIndex]} 
+            alt={image.title} 
+            className="modal-image" 
+          />
+        </div>
+        {images.length > 1 && (
+          <div className="modal-navigation">
+            <button onClick={handlePrevImage} className="nav-button prev-button">
+              &lt;
+            </button>
+            <button onClick={handleNextImage} className="nav-button next-button">
+              &gt;
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
 const GalleryPage: React.FC = () => {
-  // Sample graduate data for each year
-  // In a real application, this would likely come from an API or database
-  const graduates2023: Graduate[] = [
-    {
-      name: 'Sarah Johnson',
-      year: '2023',
-      image: '/img/Final Logo .png', // Using logo as placeholder
-      testimony: 'The caregiving program gave me the skills I needed for my career.'
-    },
-    {
-      name: 'Michael Brown',
-      year: '2023',
-      image: '/img/Final Logo .png',
-      testimony: 'I now work at a top care facility thanks to LeoLilly.'
-    },
-    {
-      name: 'Jessica Lee',
-      year: '2023',
-      image: '/img/Final Logo .png',
-      testimony: 'The First Aid training has been invaluable in my work.'
-    }
-  ];
+  const [selectedYear, setSelectedYear] = useState(getYears()[0]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
 
-  const graduates2024: Graduate[] = [
-    {
-      name: 'David Wilson',
-      year: '2024',
-      image: '/img/Final Logo .png',
-      testimony: 'LeoLilly opened career doors I never thought possible.'
-    },
-    {
-      name: 'Anna Martinez',
-      year: '2024',
-      image: '/img/Final Logo .png',
-      testimony: 'The child-minding course taught me so much about ECD.'
-    },
-    {
-      name: 'Robert Taylor',
-      year: '2024',
-      image: '/img/Final Logo .png',
-      testimony: 'Learning AU Pair Night Nursing changed my life.'
-    },
-    {
-      name: 'Emily Davis',
-      year: '2024',
-      image: '/img/Final Logo .png',
-      testimony: 'I now have the confidence to provide quality elderly care.'
-    }
-  ];
+  const years = getYears();
+  const categories = getCategories(selectedYear);
+  const filteredImages = filterImages(selectedYear, selectedCategory);
 
-  const graduates2025: Graduate[] = [
-    {
-      name: 'Sophia Adams',
-      year: '2025',
-      image: '/img/Final Logo .png',
-      testimony: 'Already putting my caregiving skills to great use!'
-    },
-    {
-      name: 'James Nelson',
-      year: '2025',
-      image: '/img/Final Logo .png',
-      testimony: 'The comprehensive training has prepared me for any situation.'
-    }
-  ];
+  const handleYearChange = (year: string) => {
+    setSelectedYear(year);
+    setSelectedCategory('All');
+  };
 
   return (
     <section className="gallery">
-      <h1>Our Graduates</h1>
+      <h1>Our Gallery</h1>
+      <p>Celebrating our graduates and their achievements</p>
       
-      {/* 2025 Graduates */}
-      <div className="graduation-year">
-        <h2>Class of 2025</h2>
+      <div className="container">
+        {/* Year Tabs */}
+        <div className="year-tabs">
+          {years.map((year) => (
+            <button
+              key={year}
+              onClick={() => handleYearChange(year)}
+              className={`year-tab ${selectedYear === year ? 'active' : ''}`}
+            >
+              {year}
+            </button>
+          ))}
+        </div>
+
+        {/* Category Filters */}
+        <div className="category-filters">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`category-button ${selectedCategory === category ? 'active' : ''}`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        {/* Gallery Grid */}
         <div className="gallery-grid">
-          {graduates2025.map((graduate, index) => (
-            <GraduateItem 
-              key={index}
-              {...graduate}
-            />
+          {filteredImages.map((image) => (
+            <div
+              key={image.id}
+              onClick={() => setSelectedImage(image)}
+              className="gallery-item"
+            >
+              <img
+                src={image.url}
+                alt={image.title}
+                className="gallery-image"
+              />
+              <h3>{image.title}</h3>
+              <p className="category-tag">{image.category}</p>
+              {image.testimony && <p className="testimony">"{image.testimony}"</p>}
+            </div>
           ))}
         </div>
       </div>
-      
-      {/* 2024 Graduates */}
-      <div className="graduation-year">
-        <h2>Class of 2024</h2>
-        <div className="gallery-grid">
-          {graduates2024.map((graduate, index) => (
-            <GraduateItem 
-              key={index}
-              {...graduate}
-            />
-          ))}
-        </div>
-      </div>
-      
-      {/* 2023 Graduates */}
-      <div className="graduation-year">
-        <h2>Class of 2023</h2>
-        <div className="gallery-grid">
-          {graduates2023.map((graduate, index) => (
-            <GraduateItem 
-              key={index}
-              {...graduate}
-            />
-          ))}
-        </div>
-      </div>
+
+      {/* Modal Component */}
+      {selectedImage && <ImageModal image={selectedImage} onClose={() => setSelectedImage(null)} />}
     </section>
   );
 };
