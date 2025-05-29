@@ -5,11 +5,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-<<<<<<< HEAD
   background-color: rgba(0, 0, 0, 0.8);
-=======
-  background-color: rgba(0, 0, 0, 0.75);
->>>>>>> 28059880e14a27d95c311704948915c14f67a2ac
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,11 +16,7 @@
   position: relative;
   max-width: 90%;
   max-height: 90vh;
-<<<<<<< HEAD
   background-color: #40363B;
-=======
-  background-color: white;
->>>>>>> 28059880e14a27d95c311704948915c14f67a2ac
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -36,18 +28,13 @@
   right: 10px;
   background: transparent;
   border: none;
-<<<<<<< HEAD
   color: #FFFFFF;
-=======
-  color: #333;
->>>>>>> 28059880e14a27d95c311704948915c14f67a2ac
   font-size: 24px;
   cursor: pointer;
   padding: 5px;
   z-index: 10;
 }
 
-<<<<<<< HEAD
 .modal-image-container {
   display: flex;
   justify-content: center;
@@ -55,14 +42,11 @@
   height: 80vh;
 }
 
-=======
->>>>>>> 28059880e14a27d95c311704948915c14f67a2ac
 .modal-image {
   max-width: 100%;
   max-height: 80vh;
   display: block;
   margin: 0 auto;
-<<<<<<< HEAD
   border-radius: 4px;
 }
 
@@ -125,8 +109,6 @@
   background-color: #753F8C;
   border-color: #753F8C;
   color: white;
-=======
->>>>>>> 28059880e14a27d95c311704948915c14f67a2ac
 }
 
 /* Year tabs styling */
@@ -148,19 +130,15 @@
   transition: all 0.3s ease;
 }
 
-<<<<<<< HEAD
 .year-tab:hover {
   color: #5D8C6D;
 }
 
-=======
->>>>>>> 28059880e14a27d95c311704948915c14f67a2ac
 .year-tab.active {
   border-bottom: 2px solid #5D8C6D;
   color: #5D8C6D;
   font-weight: bold;
 }
-<<<<<<< HEAD
 
 /* Gallery item styling */
 .gallery-item {
@@ -239,5 +217,3 @@
     font-size: 14px;
   }
 }
-=======
->>>>>>> 28059880e14a27d95c311704948915c14f67a2ac
