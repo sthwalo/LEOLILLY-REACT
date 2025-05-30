@@ -17,7 +17,7 @@ const EnrollPage: React.FC = () => {
     setMessage({ text: '', type: '' });
     
     try {
-      const response = await fetch('http://localhost:5000/api/enroll', {
+      const response = await fetch('http://localhost:8000/enroll.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
