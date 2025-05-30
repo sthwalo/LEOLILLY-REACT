@@ -4,7 +4,6 @@
 export interface Course {
   title: string;
   description: string;
-  image: string;
   duration: string;
   level: string;
 }
