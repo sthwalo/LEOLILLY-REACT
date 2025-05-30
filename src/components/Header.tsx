@@ -17,6 +17,11 @@ const Header: React.FC = () => {
             </Link>
           </li>
           <li>
+            <Link to="/about" className={location.pathname === '/about' ? 'active' : ''}>
+              About
+            </Link>
+          </li>
+          <li>
             <Link to="/courses" className={location.pathname === '/courses' ? 'active' : ''}>
               Courses
             </Link>

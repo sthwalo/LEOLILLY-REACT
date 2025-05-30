@@ -18,7 +18,7 @@ const CourseItem: React.FC<CourseItemProps> = ({ course }: CourseItemProps) => {
         <span className="duration">Duration: {duration}</span>
         <span className="level">Level: {level}</span>
       </div>
-      <Link to="/enroll" className="enroll-button">Enroll Now</Link>
+      <Link to="/enroll" className="cta-button">Enroll Now</Link>
     </div>
   );
 };

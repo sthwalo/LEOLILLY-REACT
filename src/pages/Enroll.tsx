@@ -8,18 +8,43 @@ const EnrollPage: React.FC = () => {
     phone: '',
     course: 'Elderly Care Caregiving'
   });
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState({ text: '', type: '' });
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // In a real application, this would send the data to a server
-    alert("Thank you for enrolling! We will contact you soon.");
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      course: 'Elderly Care Caregiving'
-    });
+    setLoading(true);
+    setMessage({ text: '', type: '' });
+    
+    try {
+      const response = await fetch('http://localhost:5000/api/enroll', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        setMessage({ text: 'Thank you for enrolling! We will contact you soon.', type: 'success' });
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          course: 'Elderly Care Caregiving'
+        });
+      } else {
+        setMessage({ text: data.message || 'Something went wrong. Please try again.', type: 'error' });
+      }
+    } catch (error) {
+      console.error('Enrollment error:', error);
+      setMessage({ text: 'Server error. Please try again later.', type: 'error' });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -34,6 +59,13 @@ const EnrollPage: React.FC = () => {
     <section id="enroll" className="enroll">
       <h2>Enroll in Our Courses</h2>
       <p>Fill in the form below to register for one of our caregiving courses.</p>
+      
+      {message.text && (
+        <div className={`message ${message.type}`}>
+          {message.text}
+        </div>
+      )}
+      
       <form id="enrollment-form" onSubmit={handleSubmit}>
         <label htmlFor="name">Full Name:</label>
         <input 
@@ -78,7 +110,9 @@ const EnrollPage: React.FC = () => {
           <option value="First Aid Level 1">First Aid Level 1</option>
         </select>
 
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Submitting...' : 'Submit'}
+        </button>
       </form>
     </section>
   );
