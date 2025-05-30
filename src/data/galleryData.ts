@@ -21,6 +21,8 @@ const galleryData: GalleryImage[] = [
       '/img/Team/may253.jpg',
       '/img/Team/may254.jpg',
       '/img/Team/may255.jpg',
+      '/img/Team/may256.jpg',
+      '/img/Team/may257.jpg',
     ]
   },
   /*{
