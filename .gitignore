@@ -7,3 +7,9 @@ node_modules
 /server/composer.json
 /server/vendor/composer
 /server/vendor/composer/autoload_classmap.php
+cleanup-wordpress.php
+backup-wp.php
+cleanup-backups.php
+build/
+deploy_temp/
+deploy.sh

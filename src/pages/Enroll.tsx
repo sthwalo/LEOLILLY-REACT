@@ -17,7 +17,14 @@ const EnrollPage: React.FC = () => {
     setMessage({ text: '', type: '' });
     
     try {
-      const response = await fetch('http://localhost:8000/enroll.php', {
+      // Use relative URL in production, or localhost in development
+      const apiUrl = process.env.NODE_ENV === 'production' 
+        ? '/server/enroll.php'
+        : 'http://localhost:8000/enroll.php';
+
+      console.log('Submitting to:', apiUrl);
+      
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
