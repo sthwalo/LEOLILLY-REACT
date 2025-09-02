@@ -17,11 +17,13 @@ const EnrollPage: React.FC = () => {
     setMessage({ text: '', type: '' });
     
     try {
-      // Use relative URL in production, or localhost in development
+      // Use correct URL path in production, or localhost in development
       const apiUrl = process.env.NODE_ENV === 'production' 
-        ? '/server/enroll.php'
+        ? '/server/enroll.php' // Path to PHP file in server directory
         : 'http://localhost:8000/enroll.php';
-
+        
+      // Log the environment for debugging
+      console.log('Current environment:', process.env.NODE_ENV);
       console.log('Submitting to:', apiUrl);
       
       const response = await fetch(apiUrl, {

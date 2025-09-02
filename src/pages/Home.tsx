@@ -29,12 +29,12 @@ const HomePage: React.FC = () => {
           <div className="student">
             <img src="/img/success/child.jpeg" alt="Student 1" className="student-image home-student-image" />
             <h3>Tendai Mzanywa</h3>
-            <p>"LeoLilly Care International helped me Develop essential skills for caring for children of various ages, including safety protocols, developmental activities, and positive discipline techniques."</p>
+            <p>"LeoLilly Care International helped me Develop essential skills for caring for children of various ages, including safety protocols, developmental activities, and positive discipline techniques. The training I received made me confident and prepared to start my pre-school."</p>
           </div>
           <div className="student">
-            <img src="/img/success/PHOTO-2025-05-18-07-38-11.jpg" alt="Student 2" className="student-image home-student-image" />
-            <h3>Tendai Mzanywa</h3>
-            <p>"The training I received made me confident and prepared to start my pre-school."</p>
+            <img src="/img/success/Adam.jpeg" alt="Student 2" className="student-image home-student-image" />
+            <h3>Adam Chanaiwa</h3>
+            <p>"LeoLilly Care International provided me with comprehensive training in elderly care giving. I learned essential skills for supporting seniors, including health monitoring, mobility assistance, medication management, and creating engaging activities. The practical experience I gained during training has made me confident and well-prepared for my career in elderly care."</p>
           </div>
         </div>
       </section>

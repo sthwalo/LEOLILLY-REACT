@@ -1,10 +1,72 @@
 <?php
+// Error handling configuration
+error_reporting(E_ALL);
+ini_set('display_errors', 0); // Don't show errors in production
+ini_set('log_errors', 1);
+
+// Create logs directory if it doesn't exist
+if (!file_exists(__DIR__ . '/logs')) {
+    mkdir(__DIR__ . '/logs', 0755, true);
+}
+
 // Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+ini_set('error_log', __DIR__ . '/logs/php_errors.log');
+
+ini_set('error_log', __DIR__ . '/logs/php_errors.log');
+
+// Log access for debugging
+file_put_contents(__DIR__ . '/logs/access.log', date('Y-m-d H:i:s') . ' - Access from: ' . $_SERVER['REMOTE_ADDR'] . ' - User Agent: ' . $_SERVER['HTTP_USER_AGENT'] . PHP_EOL, FILE_APPEND);
+
+// Function to get the correct date format regardless of system date
+function getCorrectDate() {
+    // Get current date from system
+    $currentDate = new DateTime();
+    
+    // Check if year is in the future (after 2023)
+    if ((int)$currentDate->format('Y') > 2023) {
+        // Force the year to be 2023 if system date is in the future
+        return date('Y-m-d H:i:s', strtotime('2023-' . date('m-d H:i:s')));
+    }
+    
+    return date('Y-m-d H:i:s');
+}
 
 // Send CORS headers for all requests
-header('Access-Control-Allow-Origin: http://localhost:3000');
+$allowedOrigins = array(
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:3001',
+    'https://leolilly.org',
+    'https://www.leolilly.org',
+    'http://leolilly.org',
+    'http://www.leolilly.org'
+);
+
+// For development, allow all origins if running on localhost
+if (strpos($_SERVER['HTTP_HOST'], 'localhost') !== false || strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false) {
+    header('Access-Control-Allow-Origin: *');
+}
+
+// Get the origin
+$origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
+if (empty($origin) && isset($_SERVER['HTTP_REFERER'])) {
+    // Try to extract origin from referer if origin header is not available
+    $refererParts = parse_url($_SERVER['HTTP_REFERER']);
+    if (isset($refererParts['scheme']) && isset($refererParts['host'])) {
+        $origin = $refererParts['scheme'] . '://' . $refererParts['host'];
+        if (isset($refererParts['port'])) {
+            $origin .= ':' . $refererParts['port'];
+        }
+    }
+}
+
+if (in_array($origin, $allowedOrigins)) {
+    header('Access-Control-Allow-Origin: ' . $origin);
+}
+
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
@@ -17,13 +79,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 // Set content type for actual requests
 header('Content-Type: application/json');
 
+// Ensure log files are writable
+if (!is_writable(__DIR__)) {
+    error_log('Server directory is not writable for logging');
+}
+
+// Clear old debug log if it's too large (> 1MB)
+if (file_exists(__DIR__ . '/logs/debug.log') && filesize(__DIR__ . '/logs/debug.log') > 1048576) {
+    file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - Log file cleared (size limit reached)' . PHP_EOL);
+}
+
 try {
+    // Create debug log directory if it doesn't exist
+    if (!file_exists(__DIR__ . '/logs')) {
+        mkdir(__DIR__ . '/logs', 0755, true);
+    }
+    
     // Log the request for debugging
-    file_put_contents('debug.log', date('Y-m-d H:i:s') . ' - Request received' . PHP_EOL, FILE_APPEND);
+    file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - Request received' . PHP_EOL, FILE_APPEND);
+    file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - Request method: ' . $_SERVER['REQUEST_METHOD'] . PHP_EOL, FILE_APPEND);
+    file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - Request headers: ' . json_encode(getallheaders()) . PHP_EOL, FILE_APPEND);
     
     // Get the POST data
     $rawInput = file_get_contents('php://input');
-    file_put_contents('debug.log', date('Y-m-d H:i:s') . ' - Raw input: ' . $rawInput . PHP_EOL, FILE_APPEND);
+    file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - Raw input: ' . $rawInput . PHP_EOL, FILE_APPEND);
     
     $data = json_decode($rawInput, true);
     if (json_last_error() !== JSON_ERROR_NONE) {
@@ -42,11 +121,11 @@ try {
     $course = $data['course'];
     
     // Log the form data
-    file_put_contents('debug.log', date('Y-m-d H:i:s') . ' - Form data: ' . json_encode($data) . PHP_EOL, FILE_APPEND);
+    file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - Form data: ' . json_encode($data) . PHP_EOL, FILE_APPEND);
     
     // Load environment variables
     $dotenv = __DIR__ . '/.env';
-    file_put_contents('debug.log', date('Y-m-d H:i:s') . ' - Loading env from: ' . $dotenv . PHP_EOL, FILE_APPEND);
+    file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - Loading env from: ' . $dotenv . PHP_EOL, FILE_APPEND);
     
     if (file_exists($dotenv)) {
         $lines = file($dotenv, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
@@ -57,13 +136,13 @@ try {
                 putenv("$key=$value");
             }
         }
-        file_put_contents('debug.log', date('Y-m-d H:i:s') . ' - Env loaded successfully' . PHP_EOL, FILE_APPEND);
+        file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - Env loaded successfully' . PHP_EOL, FILE_APPEND);
     } else {
-        file_put_contents('debug.log', date('Y-m-d H:i:s') . ' - Env file not found' . PHP_EOL, FILE_APPEND);
+        file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - Env file not found' . PHP_EOL, FILE_APPEND);
     }
     
     // Process the form data and store it
-    file_put_contents('enrollments.log', date('Y-m-d H:i:s') . ' - New enrollment: ' . json_encode($data) . PHP_EOL, FILE_APPEND);
+    file_put_contents(__DIR__ . '/logs/enrollments.log', getCorrectDate() . ' - New enrollment: ' . json_encode($data) . PHP_EOL, FILE_APPEND);
     
     // Check if PHPMailer is available
     if (file_exists(__DIR__ . '/vendor/autoload.php')) {
@@ -78,8 +157,8 @@ try {
         $emailPassword = $_ENV['MAIL_PASSWORD'] ?? '';
         $emailEncryption = $_ENV['MAIL_ENCRYPTION'] ?? 'ssl';
         
-        file_put_contents('debug.log', date('Y-m-d H:i:s') . ' - Using PHPMailer with SMTP' . PHP_EOL, FILE_APPEND);
-        file_put_contents('debug.log', date('Y-m-d H:i:s') . ' - SMTP Settings: ' . $emailHost . ':' . $emailPort . ' (encryption: ' . $emailEncryption . ')' . PHP_EOL, FILE_APPEND);
+        file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - Using PHPMailer with SMTP' . PHP_EOL, FILE_APPEND);
+        file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - SMTP Settings: ' . $emailHost . ':' . $emailPort . ' (encryption: ' . $emailEncryption . ')' . PHP_EOL, FILE_APPEND);
         
         try {
             // Admin email content
@@ -115,9 +194,9 @@ try {
             $adminMailer->Subject = $adminSubject;
             $adminMailer->Body = $adminMessage;
             
-            file_put_contents('debug.log', date('Y-m-d H:i:s') . ' - Attempting to send admin email via SMTP' . PHP_EOL, FILE_APPEND);
+            file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - Attempting to send admin email via SMTP' . PHP_EOL, FILE_APPEND);
             $adminSent = $adminMailer->send();
-            file_put_contents('debug.log', date('Y-m-d H:i:s') . ' - Admin email result: ' . ($adminSent ? 'success' : 'failed - ' . $adminMailer->ErrorInfo) . PHP_EOL, FILE_APPEND);
+            file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - Admin email result: ' . ($adminSent ? 'success' : 'failed - ' . $adminMailer->ErrorInfo) . PHP_EOL, FILE_APPEND);
             
             // Create a new PHPMailer instance for student email
             $studentMailer = new \PHPMailer\PHPMailer\PHPMailer(true);
@@ -135,9 +214,9 @@ try {
             $studentMailer->Subject = $studentSubject;
             $studentMailer->Body = $studentMessage;
             
-            file_put_contents('debug.log', date('Y-m-d H:i:s') . ' - Attempting to send student email via SMTP' . PHP_EOL, FILE_APPEND);
+            file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - Attempting to send student email via SMTP' . PHP_EOL, FILE_APPEND);
             $studentSent = $studentMailer->send();
-            file_put_contents('debug.log', date('Y-m-d H:i:s') . ' - Student email result: ' . ($studentSent ? 'success' : 'failed - ' . $studentMailer->ErrorInfo) . PHP_EOL, FILE_APPEND);
+            file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - Student email result: ' . ($studentSent ? 'success' : 'failed - ' . $studentMailer->ErrorInfo) . PHP_EOL, FILE_APPEND);
             
             if ($adminSent && $studentSent) {
                 echo json_encode([
@@ -146,14 +225,14 @@ try {
                 ]);
             } else {
                 // Return a success message to the user but log the email failure
-                file_put_contents('debug.log', date('Y-m-d H:i:s') . ' - Email sending failed but returning success to user' . PHP_EOL, FILE_APPEND);
+                file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - Email sending failed but returning success to user' . PHP_EOL, FILE_APPEND);
                 echo json_encode([
                     'success' => true, 
                     'message' => 'Enrollment submitted successfully (Note: Email delivery may have failed, check server logs)'
                 ]);
             }
         } catch (\PHPMailer\PHPMailer\Exception $e) {
-            file_put_contents('debug.log', date('Y-m-d H:i:s') . ' - PHPMailer error: ' . $e->getMessage() . PHP_EOL, FILE_APPEND);
+            file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - PHPMailer error: ' . $e->getMessage() . PHP_EOL, FILE_APPEND);
             // Return a success message to the user but log the error
             echo json_encode([
                 'success' => true, 
@@ -161,7 +240,7 @@ try {
             ]);
         }
     } else {
-        file_put_contents('debug.log', date('Y-m-d H:i:s') . ' - PHPMailer not found, skipping email sending' . PHP_EOL, FILE_APPEND);
+        file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - PHPMailer not found, skipping email sending' . PHP_EOL, FILE_APPEND);
         
         // Return success message to user
         echo json_encode([
@@ -172,12 +251,18 @@ try {
     
 } catch (Exception $e) {
     // Log the error
-    file_put_contents('debug.log', date('Y-m-d H:i:s') . ' - Error: ' . $e->getMessage() . PHP_EOL, FILE_APPEND);
+    file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - Error: ' . $e->getMessage() . PHP_EOL, FILE_APPEND);
     
-    // Return error response
+    // Return detailed error response
     http_response_code(500);
+    $errorMessage = 'Error processing request: ' . $e->getMessage();
+    
+    // Log the error with more details
+    file_put_contents(__DIR__ . '/logs/debug.log', getCorrectDate() . ' - DETAILED ERROR: ' . $errorMessage . ' | Trace: ' . $e->getTraceAsString() . PHP_EOL, FILE_APPEND);
+    
     echo json_encode([
         'success' => false, 
-        'message' => 'Error processing request: ' . $e->getMessage()
+        'message' => $errorMessage,
+        'error_code' => 'ENROLLMENT_ERROR'
     ]);
 }

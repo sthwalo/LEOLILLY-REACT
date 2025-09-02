@@ -73,9 +73,53 @@ This will create a production-ready build in the `build` folder.
 - React Router
 - CSS (with possibility to extend to Styled Components or other CSS-in-JS solutions)
 
+## Server Configuration
+
+The website includes a PHP backend for the enrollment form. The server directory contains:
+
+- `enroll.php` - Main enrollment form handler
+- `.env` - Environment configuration (copy from .env.example)
+- `vendor/` - PHP dependencies (PHPMailer)
+- `logs/` - Directory for log files
+
+### Setting Up the Server
+
+1. Navigate to the server directory
+2. Copy `.env.example` to `.env`
+3. Update the `.env` file with your email credentials
+4. Ensure the logs directory exists and is writable
+
+## Deployment
+
+### Manual Deployment
+
+1. Build the React application:
+   ```bash
+   npm run build
+   ```
+
+2. Copy the contents of the `build` directory to your web server
+3. Copy the `server` directory to your web server
+4. Configure your web server to serve the React app and handle PHP requests
+
+### Using the Deployment Script
+
+A deployment script is included to automate the process:
+
+1. Make the script executable:
+   ```bash
+   chmod +x deploy_script.sh
+   ```
+
+2. Run the script:
+   ```bash
+   ./deploy_script.sh
+   ```
+
+3. Follow the prompts to enter your FTP credentials
+
 ## Future Enhancements
 
 - Add a blog section for updates and articles
-- Implement a proper backend for form submission
 - Add more interactive elements to the courses page
 - Enhance the gallery with filtering options

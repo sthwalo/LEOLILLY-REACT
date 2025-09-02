@@ -1,0 +1,4 @@
+open -u admin@leolilly.org, -p 21 ftp.leolilly.org
+set ssl:verify-certificate no
+mirror -R deploy_temp /
+bye
