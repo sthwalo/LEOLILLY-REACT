@@ -239,7 +239,7 @@ nav ul li {
 }
 
 .footer a {
-    color: #5D8C6D;
+    color: none;
 }
 
 .footer a:hover {
@@ -250,6 +250,52 @@ nav ul li {
     margin: 15px auto;
     display: block;
     width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Social Media Links */
+.social-media-links {
+    margin-top: 20px;
+    padding: 20px 0;
+}
+
+.social-media-links p {
+    margin: 0 0 15px 0;
+    font-size: 14px;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background-color: #5D8C6D;
+    border-radius: 50%;
+    color: #FFFFFF;
+    font-size: 24px;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    background-color: #7BA889;
+    transform: scale(1.15);
+    text-decoration: none;
+}
+
+.social-icon svg {
+    width: 24px;
+    height: 24px;
 }
 
 /* Enrollment Form Section */

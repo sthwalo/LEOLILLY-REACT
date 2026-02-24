@@ -10,7 +10,7 @@ const HomePage: React.FC = () => {
         <p>Join our 4-in-1 Caregiver Combo Courses and start your career in caregiving today!</p>
         <p><strong>Total Cost: R2000 for all courses</strong></p>
         <Link to="/enroll" className="cta-button">Enroll Now</Link>
-        <a href="https://wa.me/27743809752" className="whatsapp-button">Have questions? Chat with us on WhatsApp!</a>
+        <a href="https://wa.me/27672594463" className="whatsapp-button">Have questions? Chat with us on WhatsApp!</a>
       </section>
 
       {/* Courses Section */}
